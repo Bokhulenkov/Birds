@@ -16,6 +16,7 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
         configureViewControllers()
     }
     
@@ -23,18 +24,24 @@ class MainTabBarController: UITabBarController {
     
     func configureViewControllers() {
         let feed = FeedController()
-        feed.tabBarItem.image = UIImage(named: "home_unselected")
+        let nav1 = templateNavigationController(image: "home_unselected", rootViewController: feed)
         
         let explore = ExploreController()
-        explore.tabBarItem.image = UIImage(named: "search_unselected")
+        let nav2 = templateNavigationController(image: "search_unselected", rootViewController: explore)
         
         let notification = NotificationController()
-        notification.tabBarItem.image = UIImage(named: "like_unselected")
+        let nav3 = templateNavigationController(image: "like_unselected", rootViewController: notification)
         
         let conversation = ConversationController()
-        conversation.tabBarItem.image = UIImage(named: "ic_mail_outline_white_2x-1")
+        let nav4 = templateNavigationController(image: "ic_mail_outline_white_2x-1", rootViewController: conversation)
         
-        viewControllers = [feed, explore, notification, conversation]
+        viewControllers = [nav1, nav2, nav3, nav4]
     }
 
+    func templateNavigationController(image: String, rootViewController: UIViewController) -> UINavigationController {
+        let nav = UINavigationController(rootViewController: rootViewController)
+        nav.tabBarItem.image = UIImage(named: image)
+        nav.navigationBar.barTintColor = .gray
+        return nav
+    }
 }

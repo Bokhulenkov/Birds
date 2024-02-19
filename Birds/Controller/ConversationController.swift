@@ -16,7 +16,6 @@ class ConversationController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemPink
     }
     
     // MARK: - Helpers
