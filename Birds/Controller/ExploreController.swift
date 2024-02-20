@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ExploreController: UIViewController {
+final class ExploreController: UIViewController {
     
     //    MARK: - Properties
     
@@ -16,8 +16,12 @@ class ExploreController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureUI()
     }
     
     // MARK: - Helpers
-    
+    private func configureUI() {
+        view.backgroundColor = .white
+        navigationItem.title = "Explore"
+    }
 }

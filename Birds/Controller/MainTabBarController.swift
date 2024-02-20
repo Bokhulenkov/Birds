@@ -16,7 +16,6 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
         configureViewControllers()
     }
     
@@ -41,6 +40,7 @@ class MainTabBarController: UITabBarController {
     func templateNavigationController(image: String, rootViewController: UIViewController) -> UINavigationController {
         let nav = UINavigationController(rootViewController: rootViewController)
         nav.tabBarItem.image = UIImage(named: image)
+//        почему то не меняет цвет?????
         nav.navigationBar.barTintColor = .gray
         return nav
     }

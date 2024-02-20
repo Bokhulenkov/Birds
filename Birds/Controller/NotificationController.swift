@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NotificationController: UIViewController {
+final class NotificationController: UIViewController {
     
     //    MARK: - Properties
     
@@ -16,8 +16,12 @@ class NotificationController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureUI()
     }
     
     // MARK: - Helpers
-    
+    private func configureUI() {
+        view.backgroundColor = .white
+        navigationItem.title = "Notification"
+    }
 }
