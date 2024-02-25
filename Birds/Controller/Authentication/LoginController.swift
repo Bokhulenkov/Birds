@@ -54,7 +54,7 @@ final class LoginController: UIViewController {
         button.setTitle("Log In", for: .normal)
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        button.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+//        button.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
@@ -79,7 +79,8 @@ final class LoginController: UIViewController {
     }
     
     @objc func handleShowSignUp() {
-        print("Handle Sign Up")
+        let controller = RegistrationController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     
 //    MARK: - Helpers
