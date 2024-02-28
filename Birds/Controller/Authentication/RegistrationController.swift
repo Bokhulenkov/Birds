@@ -13,6 +13,7 @@ final class RegistrationController: UIViewController {
     //    MARK: - Properties
     
     private let imagePicker = UIImagePickerController()
+    private var profileImage: UIImage?
     
     private let plusPhotoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -99,8 +100,14 @@ final class RegistrationController: UIViewController {
     }
     
     @objc func handleRegistration() {
+        guard let profileImage = profileImage else {
+            print("DEBUG: Please select a profile image...")
+            return
+        }
         guard let email = emailTextField.text else { return }
         guard let password = passwardTextField.text else { return }
+        guard let fullname = fullnameTextField.text else { return }
+        guard let username = usernameTextField.text else { return }
         
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
@@ -109,6 +116,15 @@ final class RegistrationController: UIViewController {
             }
             
             print("DEBUG: Successfully register user")
+            
+            guard let uid = result?.user.uid else { return }
+            
+//            dictionary dataBase
+            let value = ["email": email, "username": username, "fullname": fullname]
+            let ref = Database.database().reference().child("users").child(uid)
+            ref.updateChildValues(value) { (error, ref) in
+                print("DEBUG: Seccessfully update user information...")
+            }
         }
     }
     
@@ -152,6 +168,7 @@ extension RegistrationController: UIImagePickerControllerDelegate & UINavigation
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let profileImage = info[.editedImage] as? UIImage else { return }
+        self.profileImage = profileImage
         
         plusPhotoButton.layer.cornerRadius = 128 / 2
         plusPhotoButton.layer.masksToBounds = true
