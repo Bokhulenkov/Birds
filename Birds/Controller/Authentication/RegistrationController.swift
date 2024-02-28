@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 final class RegistrationController: UIViewController {
     
@@ -52,6 +53,7 @@ final class RegistrationController: UIViewController {
     
     private let passwardTextField: UITextField = {
         let tf = Utilities().textField(withPlaceholder: "Passward")
+        tf.isSecureTextEntry = true
         return tf
     }()
     
@@ -97,7 +99,17 @@ final class RegistrationController: UIViewController {
     }
     
     @objc func handleRegistration() {
-        print("Registration")
+        guard let email = emailTextField.text else { return }
+        guard let password = passwardTextField.text else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("DEBUG: Error is \(error.localizedDescription)")
+                return
+            }
+            
+            print("DEBUG: Successfully register user")
+        }
     }
     
     @objc func handleShowLogin() {
