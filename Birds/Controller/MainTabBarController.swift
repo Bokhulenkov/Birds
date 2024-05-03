@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class MainTabBarController: UITabBarController {
 
@@ -24,9 +25,40 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureUI()
-        configureViewControllers()
+//        убираем черный фон при загрузке
+        view.backgroundColor = .twitterBlue
+//        logUserOut()
+        authenticateUserAndConfigureUI()
+
     }
+    
+//    MARK: - API
+    
+//    check user login
+    func authenticateUserAndConfigureUI() {
+        if Auth.auth().currentUser == nil {
+            DispatchQueue.main.async {
+                let nav = UINavigationController(rootViewController: LoginController())
+//              do  full screen
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
+            print("DEBUG: User is NOT logged in...")
+        } else {
+            print("DEBUG: User is logged in...")
+            configureUI()
+            configureViewControllers()
+        }
+    }
+    
+    func logUserOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch let error {
+            print("DEBUG: Failed to sign outh with error \(error.localizedDescription)")
+        }
+    }
+    
 //    MARK: - Selectors
     
     @objc func actionButtonTapped() {
