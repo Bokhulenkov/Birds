@@ -115,6 +115,11 @@ final class RegistrationController: UIViewController {
            
             print("DEBUG: Sign up successful...")
             print("DEBUG: Hangle update user interface here..")
+            
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? MainTabBarController else { return }
+            tab.authenticateUserAndConfigureUI()
+            self.dismiss(animated: true, completion: nil)
         }
         
 
